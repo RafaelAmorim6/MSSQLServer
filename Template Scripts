@@ -1,0 +1,29 @@
+/*
+ PROJECT: 
+ SERVER: SERVER\
+ DATE: 202X-MM-DD
+ AUTHOR: Rafael Coelho
+ REVIEWER: 
+ PURPOSE: 
+ TASK JIRA:
+*/
+
+USE [DATABASE]
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE OBJECT_ID = OBJECT_ID(N'[DATABASE].[dbo].[tabela]') AND TYPE IN (N'U'))
+DROP TABLE [DATABASE].[dbo].[tabela]
+
+IF OBJECT_ID('tempdb..#temp') IS NOT NULL
+DROP TABLE #temp
+
+DELETE FROM [DATABASE].[dbo].[tabela]
+WHERE [Column1]  IN
+(
+	SELECT [Column1]
+	FROM #temp
+)
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE OBJECT_ID = OBJECT_ID(N'[DATABASE].[dbo].[tabela]') AND TYPE IN (N'U')) 
+CREATE CLUSTERED COLUMNSTORE INDEX idx_cs ON [DATABASE].[dbo].[tabela]
+--(n row(s) affected)
+--Exec time
